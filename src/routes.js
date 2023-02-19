@@ -4,7 +4,16 @@ const ContactController = require('./app/controllers/ContactController');
 
 const router = Router();
 
-router.get('/contacts', ContactController.index);
+router.get(
+  '/contacts',
+  (request, response, next) => {
+    // Middleware 1
+    request.appId = 'MeuAppId';
+    next();
+  },
+  ContactController.index,
+);
+
 router.get('/contacts/:id', ContactController.show);
 router.delete('/contacts/:id', ContactController.delete);
 
