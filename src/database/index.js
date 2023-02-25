@@ -1,4 +1,4 @@
-const { query } = require('express');
+// const { query } = require('express');
 const { Client } = require('pg');
 
 const client = new Client({
@@ -6,7 +6,7 @@ const client = new Client({
   port: 5432,
   user: 'root',
   password: 'root',
-  database: 'mycontacts'
+  database: 'mycontacts',
 });
 
 client.connect();
