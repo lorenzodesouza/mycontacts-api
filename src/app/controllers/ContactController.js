@@ -1,5 +1,5 @@
 const { response } = require('express');
-const ContactsRepository = require('../repositories/ContactsRepository')
+const ContactsRepository = require('../repositories/ContactsRepository');
 
 class ContactController {
   async index(request, response) {
@@ -26,15 +26,17 @@ class ContactController {
 
   async store(request, response) {
     // Criar novo registro
-    const { name, email, phone, category_id } = request.body;
+    const {
+      name, email, phone, category_id,
+    } = request.body;
 
     if (!name) {
-      return response.status(400).json({ erro: 'name is required'});
+      return response.status(400).json({ erro: 'name is required' });
     }
 
     const contactExists = await ContactsRepository.findByEmail(email);
     if (contactExists) {
-      return response.status(400).json({ erro: 'this email is already is use'});
+      return response.status(400).json({ erro: 'this email is already is use' });
     }
 
     const contact = await ContactsRepository.create({
@@ -46,8 +48,10 @@ class ContactController {
 
   async update(request, response) {
     // Editar um registro
-    const { id } = request.params
-    const { name, email, phone, category_id } = request.body
+    const { id } = request.params;
+    const {
+      name, email, phone, category_id,
+    } = request.body;
 
     const contactExists = await ContactsRepository.findById(id);
 
@@ -57,16 +61,16 @@ class ContactController {
     }
 
     if (!name) {
-      return response.status(400).json({ erro: 'name is required'});
+      return response.status(400).json({ erro: 'name is required' });
     }
 
     const contactByEmail = await ContactsRepository.findByEmail(email);
     if (contactByEmail && contactByEmail.id !== id) {
-      return response.status(400).json({ erro: 'this email is already is use'});
+      return response.status(400).json({ erro: 'this email is already is use' });
     }
 
     const contact = await ContactsRepository.update(id, {
-      name, email, phone, category_id
+      name, email, phone, category_id,
     });
 
     response.json(contact);
